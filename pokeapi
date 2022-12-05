@@ -3,7 +3,7 @@ import requests
 
 myclient = pymongo.MongoClient('mongodb://localhost:27017/')
 
-mydb = myclient['pokedex']
+mydb = myclient['redpokedex']
 
 mycol = mydb["firstgen"]
 mycol.drop()
