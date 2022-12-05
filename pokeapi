@@ -30,7 +30,6 @@ while i < 152:
     pokestats = data['stats']
     poketype = data['types']
     pokemoves = data['moves']
-    pokeitems = data['held_items']
 
     response = requests.get(url2)
     data = response.json()
@@ -38,7 +37,7 @@ while i < 152:
     pokedex = data['flavor_text_entries'][0]['flavor_text']
     
     myentry = { "id": pokeid, "name": pokename, "stats": pokestats, "types": poketype, 
-                "moves": pokemoves, "helditems": pokeitems, "pokedexentry": pokedex }
+                "moves": pokemoves, "pokedexentry": pokedex }
     x = mycol.insert_one(myentry)
     
     url = "https://pokeapi.co/api/v2/pokemon/"
