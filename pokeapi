@@ -1,0 +1,38 @@
+import pymongo
+import requests
+
+myclient = pymongo.MongoClient('mongodb://localhost:27017/')
+
+mydb = myclient['pokedex']
+
+mycol = mydb["firstgen"]
+mycol.drop()
+mycol = mydb["firstgen"]
+
+url = "https://pokeapi.co/api/v2/pokemon/"
+
+
+
+i=1
+
+while i < 152:
+    url += str(i)
+    url += "/"
+    
+    response = requests.get(url)
+    data = response.json()
+
+    pokeid = data['id']
+    pokename = data['name']
+    pokestats = data['stats']
+    poketype = data['types']
+    pokeabilities = data['abilities']
+    pokemoves = data['moves']
+    pokeitems = data['held_items']
+    
+    myentry = { "id": pokeid, "name": pokename, "stats": pokestats, "types": poketype, "abilities": pokeabilities,
+                "moves": pokemoves, "helditems": pokeitems}
+    x = mycol.insert_one(myentry)
+    
+    url = "https://pokeapi.co/api/v2/pokemon/"
+    i+=1
