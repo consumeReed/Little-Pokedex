@@ -62,4 +62,6 @@ while i < 152:
     #reset/increment
     url = "https://pokeapi.co/api/v2/pokemon/"
     url2 = "https://pokeapi.co/api/v2/pokemon-species/"
+    poketype = ""
+    pokemoves = ""
     i+=1
