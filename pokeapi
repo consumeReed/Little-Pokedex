@@ -10,7 +10,7 @@ non_bmp_map=dict.fromkeys(range(0x10000, sys.maxunicode+1), 0xfffd)
 #connecting to Mongodb and making database + col
 myclient = pymongo.MongoClient('mongodb://localhost:27017/')
 
-mydb = myclient['redpokedex']
+mydb = myclient['pokedex']
 
 mycol = mydb["firstgen"]
 mycol.drop()
@@ -53,9 +53,10 @@ while i < 152:
     data = response.json()
     
     pokedex = data['flavor_text_entries'][0]['flavor_text']
+    jpnname = data['names'][0]['name']
 
     #input data into database
-    myentry = { "id": pokeid, "name": pokename, "types": poketype, 
+    myentry = { "id": pokeid, "name": pokename, "jpnname": jpnname, "types": poketype, 
                 "moves": pokemoves, "pokedexentry": pokedex }
     x = mycol.insert_one(myentry)
 
