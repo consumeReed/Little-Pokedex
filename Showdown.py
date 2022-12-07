@@ -2,7 +2,7 @@ import requests
 import pymongo
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017")
-mydb = myclient["Pokedex"]
+mydb = myclient["pokedex"]
 mycol = mydb["ALLPKMN"]
 mycol.drop()
 mycol = mydb["ALLPKMN"]
@@ -29,5 +29,11 @@ for j in range(151):
     pkquery = { "dexno": j+1}
     pkname = mycol.find(pkquery, {"name": 1, "_id": 0})
     name = pkname[0]['name'].replace('-', '')
-    #name.replace('-', '')
-    showcol.insert_one(showdowndata[name])
+    
+    types = showdowndata[name]['types']
+    baseStats = showdowndata[name]['baseStats']
+    weight = showdowndata[name]['weightkg']
+    height = showdowndata[name]['heightm']
+    num = showdowndata[name]['num']
+    tmp = {'name': name, 'types': types, 'baseStats': baseStats, 'weight': weight, 'height': height, 'num': num}
+    showcol.insert_one(tmp)
