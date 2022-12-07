@@ -26,10 +26,10 @@ poketype = ""
 pokemoves= ""
 
 #this is the first generation pokemon and we are only gathering 151
-while i < 152:
-    url += str(i)
+for i in range(151):
+    url += str(i+1)
     url += "/"
-    url2 += str(i)
+    url2 += str(i+1)
     url2 += "/"
 
     #first request is for the pokemon data
@@ -51,8 +51,12 @@ while i < 152:
     #changing url to dex entry data
     response = requests.get(url2)
     data = response.json()
-    
-    pokedex = data['flavor_text_entries'][0]['flavor_text']
+    j = 1
+    while True:
+        pokedex = data['flavor_text_entries'][j]['flavor_text']
+        if data['flavor_text_entries'][j]['language']['name'] == 'en':
+            break
+        j = j + 1
     jpnname = data['names'][0]['name']
 
     #input data into database
@@ -65,4 +69,3 @@ while i < 152:
     url2 = "https://pokeapi.co/api/v2/pokemon-species/"
     poketype = ""
     pokemoves = ""
-    i+=1
