@@ -22,7 +22,7 @@ def getTypes(name):
 def getStats(name):
     pkquery = { "name": name}
     pkstats = showcol.find(pkquery, {"baseStats": 1, "_id": 0})
-    return pkstats[0]['baseStats']
+    return str(pkstats[0]['baseStats'])
 
 #Returns weight value of pokemon
 def getWeight(name):
@@ -33,5 +33,8 @@ def getWeight(name):
 #Returns height value of pokemon
 def getHeight(name):
     pkquery = { "name": name}
-    pkstats = showcol.find(pkquery, {"weight": 1, "_id": 0})
+    pkstats = showcol.find(pkquery, {"height": 1, "_id": 0})
     return pkstats[0]['height']
+
+
+#print(getHeight("mew"))
