@@ -3,7 +3,7 @@ import os.path
 import RetrieveShowdown as rsd
 import Showdown as sd
 import pokeapi as pa
-import megaCries as mc
+import webbrowser
 
 #2 column window layout
 file_list_column = [
@@ -65,8 +65,7 @@ while True:
                 window["-WEIGHT-"].update("WEIGHT "+str(rsd.getWeight(name)))
                 window["-HEIGHT-"].update("HEIGHT "+str(rsd.getHeight(name)))
                 window["-MOVES-"].update("DESC "+moves)
-                window["-CRY-"].update("CRY "+str(mc.getCry(int(searchItem))))
-
+                webbrowser.open('https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/' + str(searchItem) + '.svg', new = 1)
                 #window["-IMAGE-"].update(filename = os.getcwd()+"\pokeImg\/"+searchItem+".png")
  
             except:
