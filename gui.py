@@ -3,8 +3,10 @@ import os.path
 import RetrieveShowdown as rsd
 import Showdown as sd
 import pokeapi as pa
+import megaCries as mc
 import webbrowser
 
+print("Starting gui. This may take a few minutes")
 #2 column window layout
 file_list_column = [
     [
@@ -47,7 +49,6 @@ while True:
 
     # pokemon index was filled in
     if event == "Search":
-        print(os.getcwd()+"\pokeImg")
         searchItem = values["-SEARCH-ITEM-"]
         print (searchItem)
 
@@ -65,8 +66,8 @@ while True:
                 window["-WEIGHT-"].update("WEIGHT "+str(rsd.getWeight(name)))
                 window["-HEIGHT-"].update("HEIGHT "+str(rsd.getHeight(name)))
                 window["-MOVES-"].update("DESC "+moves)
-                webbrowser.open('https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/' + str(searchItem) + '.svg', new = 1)
-                #window["-IMAGE-"].update(filename = os.getcwd()+"\pokeImg\/"+searchItem+".png")
+                webbrowser.open(mc.getCry(int(searchItem)), new = 1)
+                webbrowser.open(rsd.getImg(name), new = 2)
  
             except:
                 pass
