@@ -1,3 +1,4 @@
+print("Starting gui. This may take a few minutes")
 import PySimpleGUI as sg
 import os.path
 import RetrieveShowdown as rsd
@@ -6,7 +7,6 @@ import pokeapi as pa
 import megaCries as mc
 import webbrowser
 
-print("Starting gui. This may take a few minutes")
 #2 column window layout
 file_list_column = [
     [
