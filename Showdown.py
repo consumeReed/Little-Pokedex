@@ -14,6 +14,9 @@ showcol = mydb["showdown"]
 showcol.drop()
 showcol = mydb["showdown"]
 
+#Pokemon images url
+imgurl = "https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/"
+
 #Pokeapi url that has 151 pokemon 
 allurl = 'https://pokeapi.co/api/v2/pokemon?limit=151&offset=0'
 
@@ -22,7 +25,8 @@ alldata = allresponse.json()
 
 #Storing each pokemon and its dex number in Mongo DB
 for i in range(151):
-    tmp = { "name": alldata['results'][i]['name'], "dexno": i+1}
+    img = imgurl + str(i+1) + ".svg"
+    tmp = { "name": alldata['results'][i]['name'], "dexno": i+1, "img": img}
     mycol.insert_one(tmp)
 
 #Pokemon Showdown url that will be used to get more detailed info about pokemon

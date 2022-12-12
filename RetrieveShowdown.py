@@ -4,6 +4,7 @@ import requests
 #Establish connection to Mongo DB
 myclient = pymongo.MongoClient("mongodb://localhost:27017")
 mydb = myclient["pokedex"]
+mycol = mydb["ALLPKMN"]
 showcol = mydb["showdown"]
 
 #Returns string of pokemons name based on its dex no
@@ -36,5 +37,9 @@ def getHeight(name):
     pkstats = showcol.find(pkquery, {"height": 1, "_id": 0})
     return pkstats[0]['height']
 
+#Returns url of pokemon svg
+def getImg(name):
+    pkquery = { "name": name}
+    pkstats = mycol.find(pkquery, {"img": 1, "_id": 0})
+    return (pkstats[0]['img'])
 
-#print(getHeight("mew"))
