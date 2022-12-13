@@ -4,11 +4,20 @@
 
 The Little Pokedex is an application that shows information about the original 151 Pokemon.
 
+![](https://imgur.com/a/hRGAP98)
+
+
 ### Built With/Using
 
 * Python
 * Pokemon Showdown API
 * PokeAPI
+
+
+## Requirements
+
+* Python 3.10 or older, Generated-based Coroutines are no longer supported in newer versions of Python.
+* Modify the mega.py package using [this fix](https://stackoverflow.com/questions/68465210/problem-downloading-mega-files-with-python/68465437#68465437)
 
 ## Getting Started
 
