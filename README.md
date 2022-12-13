@@ -4,7 +4,7 @@
 
 The Little Pokedex is an application that shows information about the original 151 Pokemon.
 
-![](https://imgur.com/a/hRGAP98)
+![](https://i.imgur.com/2RcAhNO.png)
 
 
 ### Built With/Using
