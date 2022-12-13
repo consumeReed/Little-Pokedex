@@ -13,62 +13,63 @@ myclient = pymongo.MongoClient('mongodb://localhost:27017/')
 mydb = myclient['pokedex']
 
 mycol = mydb["firstgen"]
-mycol.drop()
-mycol = mydb["firstgen"]
 
-#need 2 urls to connect to the pokemon and dex entries
-url = "https://pokeapi.co/api/v2/pokemon/"
-url2 = "https://pokeapi.co/api/v2/pokemon-species/"
-
-#iterator through pokemon that start at 1
-i=1
-poketype = ""
-pokemoves= ""
-
-#this is the first generation pokemon and we are only gathering 151
-for i in range(151):
-    url += str(i+1)
-    url += "/"
-    url2 += str(i+1)
-    url2 += "/"
-
-    #first request is for the pokemon data
-    response = requests.get(url)
-    data = response.json()
-
-    pokeid = data['id']
-    pokename = data['name']
-
-    #type and moves are arrays so we need to break them down
-    for j in data['types']:
-        x= j['type']['name'].translate(non_bmp_map)
-        poketype += x + "\n"
-        
-    for k in data['moves']:
-        p= k['move']['name'].translate(non_bmp_map)
-        pokemoves += p + "\n"
-
-    #changing url to dex entry data
-    response = requests.get(url2)
-    data = response.json()
-    j = 1
-    while True:
-        pokedex = data['flavor_text_entries'][j]['flavor_text']
-        if data['flavor_text_entries'][j]['language']['name'] == 'en':
-            break
-        j = j + 1
-    jpnname = data['names'][0]['name']
-
-    #input data into database
-    myentry = { "id": pokeid, "name": pokename, "jpnname": jpnname, "types": poketype, 
-                "moves": pokemoves, "pokedexentry": pokedex }
-    x = mycol.insert_one(myentry)
-
-    #reset/increment
+if mycol.count_documents({}) != 151:
+    mycol.drop()
+    mycol = mydb["firstgen"]
+    #need 2 urls to connect to the pokemon and dex entries
     url = "https://pokeapi.co/api/v2/pokemon/"
     url2 = "https://pokeapi.co/api/v2/pokemon-species/"
+
+    #iterator through pokemon that start at 1
+    i=1
     poketype = ""
-    pokemoves = ""
+    pokemoves= ""
+
+    #this is the first generation pokemon and we are only gathering 151
+    for i in range(151):
+        url += str(i+1)
+        url += "/"
+        url2 += str(i+1)
+        url2 += "/"
+
+        #first request is for the pokemon data
+        response = requests.get(url)
+        data = response.json()
+
+        pokeid = data['id']
+        pokename = data['name']
+
+        #type and moves are arrays so we need to break them down
+        for j in data['types']:
+            x= j['type']['name'].translate(non_bmp_map)
+            poketype += x + "\n"
+            
+        for k in data['moves']:
+            p= k['move']['name'].translate(non_bmp_map)
+            pokemoves += p + "\n"
+
+        #changing url to dex entry data
+        response = requests.get(url2)
+        data = response.json()
+        j = 1
+        while True:
+            pokedex = data['flavor_text_entries'][j]['flavor_text']
+            if data['flavor_text_entries'][j]['language']['name'] == 'en':
+                break
+            j = j + 1
+        jpnname = data['names'][0]['name']
+
+        #input data into database
+        myentry = { "id": pokeid, "name": pokename, "jpnname": jpnname, "types": poketype, 
+                    "moves": pokemoves, "pokedexentry": pokedex }
+        x = mycol.insert_one(myentry)
+
+        #reset/increment
+        url = "https://pokeapi.co/api/v2/pokemon/"
+        url2 = "https://pokeapi.co/api/v2/pokemon-species/"
+        poketype = ""
+        pokemoves = ""
 
 def getJpnname(name):
     pkquery = { "name": name}

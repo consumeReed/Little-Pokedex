@@ -41,6 +41,7 @@ layout = [
 
 window = sg.Window("Image Viewer", layout)
 
+
 #event loop
 while True:
     event, values = window.read()
@@ -50,26 +51,28 @@ while True:
     # pokemon index was filled in
     if event == "Search":
         searchItem = values["-SEARCH-ITEM-"]
-        print (searchItem)
-
-        if int(searchItem) in range (1, 152):
+        #print (searchItem)
+        i = int(searchItem)
+        if i in range (1, 152):
             try:
-                name = rsd.getDex(int(searchItem))
-                types =" ".join(rsd.getTypes(name))
+                name = rsd.getDex(i)
+                types = " ".join(rsd.getTypes(name))
                 stats =rsd.getStats(name)
                 moves =pa.getEntry(name)
-
+                
                 window["-NAME-"].update("NAME "+name)
-                window["-JPNAME-"].update("JAPANESE NAME "+pa.getJpnname(name))
+                window["-JPNAME-"].update("JAPANESE NAME "+ pa.getJpnname(name))
                 window["-TYPE-"].update("TYPES "+types)
                 window["-STAT-"].update("STATS "+stats)
                 window["-WEIGHT-"].update("WEIGHT "+str(rsd.getWeight(name)))
                 window["-HEIGHT-"].update("HEIGHT "+str(rsd.getHeight(name)))
                 window["-MOVES-"].update("DESC "+moves)
-                webbrowser.open(mc.getCry(int(searchItem)), new = 1)
+                
+                webbrowser.open(mc.getCry(i), new = 1)
                 webbrowser.open(rsd.getImg(name), new = 2)
  
             except:
+                print('error')
                 pass
 
 window.close()
